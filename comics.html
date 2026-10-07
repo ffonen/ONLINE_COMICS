@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн-комиксы - Каталог</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-book-open"></i>
+      Онлайн-комиксы
+    </a>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Поиск комиксов, авторов...">
+    </div>
+    <div class="auth-buttons">
+      <a href="auth.html" class="btn-login">Войти</a>
+      <a href="auth.html" class="btn-register">Регистрация</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i> Главная
+      </a>
+      <a href="comics.html" class="nav-item active">
+        <i class="fa-solid fa-book"></i> Комиксы
+      </a>
+      <a href="create.html" class="nav-item">
+        <i class="fa-solid fa-pen"></i> Создать историю
+      </a>
+      <a href="rules.html" class="nav-item">
+        <i class="fa-solid fa-file-lines"></i> Правила
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fa-solid fa-user"></i> Профиль
+      </a>
+    </aside>
+
+    <main>
+      <h2 style="font-size: 28px; margin-bottom: 24px;">Комиксы</h2>
+
+      <!-- Фильтры -->
+      <div class="filters">
+        <div class="filter-group" id="filterGroup">
+          <button class="filter-btn active" data-filter="all">Все</button>
+          <button class="filter-btn" data-filter="popular">Популярные</button>
+          <button class="filter-btn" data-filter="new">Новое</button>
+          <button class="filter-btn" data-filter="completed">Завершённые</button>
+        </div>
+        <select class="sort-select" id="sortSelect">
+          <option value="new">Сначала новые</option>
+          <option value="old">Сначала старые</option>
+          <option value="popular">По популярности</option>
+        </select>
+      </div>
+
+      <!-- Сетка комиксов -->
+      <div class="grid-cards" id="comicsGrid">
+
+        <div class="card" data-status="popular" data-views="12400" data-date="2024-05-01" data-title="Путь героя" data-author="@user123">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Путь героя</h3>
+            <div class="author">Автор: @user123</div>
+            <div class="desc">История о том, как обычный человек стал героем.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 12.4k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 342</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="completed" data-views="8700" data-date="2024-04-15" data-title="Последний рубеж" data-author="@komiksik">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Последний рубеж</h3>
+            <div class="author">Автор: @komiksik</div>
+            <div class="desc">Когда мир рушится, остаётся только одно — выжить.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 8.7k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 210</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="new" data-views="5300" data-date="2024-06-10" data-title="Новая эра" data-author="@alex_draw">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Новая эра</h3>
+            <div class="author">Автор: @alex_draw</div>
+            <div class="desc">Начало новой истории в новом мире.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 5.3k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 128</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="popular" data-views="9100" data-date="2024-03-20" data-title="Тени города" data-author="@night_artist">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Тени города</h3>
+            <div class="author">Автор: @night_artist</div>
+            <div class="desc">Город скрывает больше, чем кажется.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 9.1k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 276</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="new" data-views="6800" data-date="2024-06-05" data-title="Космический странник" data-author="@space_comics">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Космический странник</h3>
+            <div class="author">Автор: @space_comics</div>
+            <div class="desc">Одинокий путешественник в бескрайнем космосе.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 6.8k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 193</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="completed" data-views="4200" data-date="2024-02-10" data-title="Дневник художника" data-author="@art_life">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Дневник художника</h3>
+            <div class="author">Автор: @art_life</div>
+            <div class="desc">Зарисовки из повседневной жизни и не только.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 4.2k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 97</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="new" data-views="7600" data-date="2024-06-15" data-title="Всё сначала" data-author="@renewal">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Всё сначала</h3>
+            <div class="author">Автор: @renewal</div>
+            <div class="desc">Иногда нужно потерять всё, чтобы начать заново.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 7.6k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 155</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-status="popular" data-views="3900" data-date="2024-05-20" data-title="Два мира" data-author="@mira">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Два мира</h3>
+            <div class="author">Автор: @mira</div>
+            <div class="desc">В реальности и во сне существуют разные правила.</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> 3.9k</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> 88</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Сообщение "ничего не найдено" -->
+      <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px; color: var(--text-muted);">
+        <i class="fa-regular fa-face-frown" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+        <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-main);">Ничего не найдено</h3>
+        <p style="font-size: 14px;">Попробуйте изменить фильтры или поисковый запрос</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const grid = document.getElementById('comicsGrid');
+    const cards = [];
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const sortSelect = document.getElementById('sortSelect');
+    const searchInput = document.getElementById('searchInput');
+    const emptyState = document.getElementById('emptyState');
+
+    let currentFilter = 'all';
+    let currentSort = 'new';
+    let currentSearch = '';
+
+    // --- ФИЛЬТРАЦИЯ ПО ВКЛАДКАМ ---
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    // --- СОРТИРОВКА ---
+    sortSelect.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      applyFilters();
+    });
+
+    // --- ПОИСК ---
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    // --- ЗАГРУЗКА ПОЛЬЗОВАТЕЛЬСКИХ КОМИКСОВ ИЗ LOCALSTORAGE ---
+    function renderUserComics() {
+      const saved = JSON.parse(localStorage.getItem('comics') || '[]');
+      
+      saved.forEach(comic => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.status = comic.status;
+        card.dataset.views = comic.views;
+        card.dataset.date = comic.date;
+        card.dataset.title = comic.title;
+        card.dataset.author = comic.author;
+        card.dataset.genre = comic.genre;
+        card.dataset.id = comic.id;
+        
+        const coverHTML = comic.cover 
+          ? `<img src="${comic.cover}" style="width: 100%; height: 100%; object-fit: cover;">`
+          : `<i class="fa-regular fa-image"></i>`;
+        
+        card.innerHTML = `
+          <div class="card-img">${coverHTML}</div>
+          <div class="card-body">
+            <h3>${comic.title}</h3>
+            <div class="author">Автор: ${comic.author}</div>
+            <div class="desc">${comic.description}</div>
+            <div class="card-stats">
+              <div class="stat-item"><i class="fa-regular fa-eye"></i> ${comic.views}</div>
+              <div class="stat-item"><i class="fa-regular fa-comment"></i> ${comic.comments}</div>
+              <div class="stat-item"><i class="fa-regular fa-bookmark"></i></div>
+            </div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+      
+      // Обновляем массив cards, чтобы фильтры видели новые
+      cards.length = 0;
+      cards.push(...grid.querySelectorAll('.card'));
+    }
+
+    // Вызываем перед первой фильтрацией
+    renderUserComics();
+    applyFilters();
+
+    // --- ОСНОВНАЯ ФУНКЦИЯ ---
+    function applyFilters() {
+      // 1. Фильтр по статусу + поиск
+      let visibleCards = cards.filter(card => {
+        const matchesFilter = currentFilter === 'all' || card.dataset.status === currentFilter;
+        const title = card.dataset.title.toLowerCase();
+        const author = card.dataset.author.toLowerCase();
+        const matchesSearch = currentSearch === '' || 
+                              title.includes(currentSearch) || 
+                              author.includes(currentSearch);
+        return matchesFilter && matchesSearch;
+      });
+
+      // 2. Сортировка
+      visibleCards.sort((a, b) => {
+        if (currentSort === 'new') {
+          return new Date(b.dataset.date) - new Date(a.dataset.date);
+        } else if (currentSort === 'old') {
+          return new Date(a.dataset.date) - new Date(b.dataset.date);
+        } else if (currentSort === 'popular') {
+          return parseInt(b.dataset.views) - parseInt(a.dataset.views);
+        }
+      });
+
+      // 3. Скрываем все, затем показываем нужные в правильном порядке
+      cards.forEach(card => card.style.display = 'none');
+      visibleCards.forEach(card => {
+        card.style.display = 'flex';
+        grid.appendChild(card); // переставляем в конец — так сортировка сработает
+      });
+
+      // 4. Пустое состояние
+      emptyState.style.display = visibleCards.length === 0 ? 'block' : 'none';
+    }
+
+    // Инициализация при загрузке
+    applyFilters();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн-комиксы - Главная</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-book-open"></i>
+      Онлайн-комиксы
+    </a>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Поиск комиксов, авторов...">
+    </div>
+    <div class="auth-buttons">
+      <a href="auth.html" class="btn-login">Войти</a>
+      <a href="auth.html" class="btn-register">Регистрация</a>
+    </div>
+  </header>
+
+  <!-- Макет -->
+  <div class="layout">
+    <!-- Сайдбар -->
+    <aside class="sidebar">
+      <a href="index.html" class="nav-item active">
+        <i class="fa-solid fa-house"></i> Главная
+      </a>
+      <a href="comics.html" class="nav-item">
+        <i class="fa-solid fa-book"></i> Комиксы
+      </a>
+      <a href="create.html" class="nav-item">
+        <i class="fa-solid fa-pen"></i> Создать историю
+      </a>
+      <a href="rules.html" class="nav-item">
+        <i class="fa-solid fa-file-lines"></i> Правила
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fa-solid fa-user"></i> Профиль
+      </a>
+    </aside>
+
+    <!-- Контент -->
+    <main>
+      <!-- Популярные комиксы -->
+      <div class="section-header">
+        <h2>Популярные комиксы</h2>
+        <a href="comics.html" class="link-all">Смотреть все <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      
+      <div class="grid-cards">
+        <!-- Карточка 1 -->
+        <div class="card">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Путь героя</h3>
+            <div class="author">Автор: @user123</div>
+          </div>
+        </div>
+        <!-- Карточка 2 -->
+        <div class="card">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Последний рубеж</h3>
+            <div class="author">Автор: @komiksik</div>
+          </div>
+        </div>
+        <!-- Карточка 3 -->
+        <div class="card">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Новая эра</h3>
+            <div class="author">Автор: @alex_draw</div>
+          </div>
+        </div>
+        <!-- Карточка 4 -->
+        <div class="card">
+          <div class="card-img"><i class="fa-regular fa-image"></i></div>
+          <div class="card-body">
+            <h3>Тени города</h3>
+            <div class="author">Автор: @night_artist</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Недавние обновления -->
+      <div class="section-header">
+        <h2>Недавние обновления</h2>
+      </div>
+
+      <div class="update-list">
+        <div class="update-item">
+          <div class="update-thumb"><i class="fa-regular fa-image"></i></div>
+          <div class="update-info">
+            <h4>Долгожданное продолжение</h4>
+            <p>Автор: @user123</p>
+          </div>
+          <div class="update-date">Сегодня</div>
+        </div>
+        <div class="update-item">
+          <div class="update-thumb"><i class="fa-regular fa-image"></i></div>
+          <div class="update-info">
+            <h4>Новая глава</h4>
+            <p>Автор: @komiksik</p>
+          </div>
+          <div class="update-date">Вчера</div>
+        </div>
+        <div class="update-item">
+          <div class="update-thumb"><i class="fa-regular fa-image"></i></div>
+          <div class="update-info">
+            <h4>Эпизод 5</h4>
+            <p>Автор: @alex_draw</p>
+          </div>
+          <div class="update-date">2 дня назад</div>
+        </div>
+        <div class="update-item">
+          <div class="update-thumb"><i class="fa-regular fa-image"></i></div>
+          <div class="update-info">
+            <h4>Вопрос к автору</h4>
+            <p>Автор: @night_artist</p>
+          </div>
+          <div class="update-date">3 дня назад</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  // --- ДОБАВЛЯЕМ НОВЫЕ КОМИКСЫ В "НЕДАВНИЕ ОБНОВЛЕНИЯ" ---
+  const saved = JSON.parse(localStorage.getItem('comics') || '[]');
+  const updateList = document.querySelector('.update-list');
+
+  // Сортируем: самые свежие — наверху
+  const recent = [...saved].sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
+
+  recent.forEach(comic => {
+    const item = document.createElement('div');
+    item.className = 'update-item';
+    
+    const thumbHTML = comic.cover
+      ? `<img src="${comic.cover}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);">`
+      : `<i class="fa-regular fa-image"></i>`;
+
+    // Форматируем дату: "Сегодня", "Вчера", "N дней назад"
+    const daysAgo = Math.floor((Date.now() - comic.createdAt) / (1000 * 60 * 60 * 24));
+    let dateLabel = 'Сегодня';
+    if (daysAgo === 1) dateLabel = 'Вчера';
+    else if (daysAgo > 1 && daysAgo < 5) dateLabel = `${daysAgo} дня назад`;
+    else if (daysAgo >= 5) dateLabel = `${daysAgo} дней назад`;
+
+    item.innerHTML = `
+      <div class="update-thumb">${thumbHTML}</div>
+      <div class="update-info">
+        <h4>${comic.title}</h4>
+        <p>Автор: ${comic.author}</p>
+      </div>
+      <div class="update-date">${dateLabel}</div>
+    `;
+    
+    // Вставляем сверху
+    updateList.insertBefore(item, updateList.firstChild);
+  });
+  </script>
+
+</body>
+</html>

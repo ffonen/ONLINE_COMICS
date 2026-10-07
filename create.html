@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн-комиксы - Создание истории</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-book-open"></i>
+      Онлайн-комиксы
+    </a>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Поиск комиксов, авторов...">
+    </div>
+    <div class="auth-buttons">
+      <a href="auth.html" class="btn-login">Войти</a>
+      <a href="auth.html" class="btn-register">Регистрация</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i> Главная
+      </a>
+      <a href="comics.html" class="nav-item">
+        <i class="fa-solid fa-book"></i> Комиксы
+      </a>
+      <a href="create.html" class="nav-item active">
+        <i class="fa-solid fa-pen"></i> Создать историю
+      </a>
+      <a href="rules.html" class="nav-item">
+        <i class="fa-solid fa-file-lines"></i> Правила
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fa-solid fa-user"></i> Профиль
+      </a>
+    </aside>
+
+    <main>
+      <h2 style="font-size: 28px; margin-bottom: 24px;">Создание истории</h2>
+
+      <!-- Степпер -->
+      <div class="stepper" id="stepper">
+        <div class="step active" data-step="1">
+          <div class="step-num">1</div>
+          Основная информация
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="2">
+          <div class="step-num">2</div>
+          Страницы
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="3">
+          <div class="step-num">3</div>
+          Публикация
+        </div>
+      </div>
+
+      <div class="form-layout">
+        <!-- ЛЕВАЯ КОЛОНКА: ШАГИ -->
+        <div>
+
+          <!-- ШАГ 1 -->
+          <div class="form-step active" data-step="1">
+            <div class="form-group">
+              <label>Название истории *</label>
+              <input type="text" class="form-control" id="inputTitle" placeholder="Например: Путь героя">
+            </div>
+
+            <div class="form-group">
+              <label>Описание *</label>
+              <textarea class="form-control" id="inputDesc" placeholder="Кратко расскажите о чём будет ваш комикс..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Жанр *</label>
+              <select class="form-control" id="inputGenre">
+                <option value="" disabled selected>Выберите жанр</option>
+                <option>Фантастика</option>
+                <option>Фэнтези</option>
+                <option>Драма</option>
+                <option>Комедия</option>
+                <option>Приключения</option>
+                <option>Ужасы</option>
+                <option>Романтика</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Обложка</label>
+              <div class="upload-area" id="uploadCover">
+                <i class="fa-regular fa-image"></i>
+                <div>Загрузите изображение</div>
+                <div style="font-size: 12px; margin-top: 4px;">или перетащите файл сюда</div>
+              </div>
+              <div class="upload-hint">Рекомендуемый размер: 1200×630, JPG или PNG</div>
+            </div>
+          </div>
+
+          <!-- ШАГ 2 -->
+          <div class="form-step" data-step="2">
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+              Загрузите страницы комикса. Порядок страниц можно менять — просто удаляйте и добавляйте заново.
+            </p>
+
+            <div class="pages-grid" id="pagesGrid">
+              <div class="page-item add-page" id="addPageBtn">
+                <i class="fa-solid fa-plus"></i>
+                <span>Добавить страницу</span>
+              </div>
+            </div>
+
+            <input type="file" id="pageInput" accept="image/*" style="display: none;" multiple>
+
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 16px;">
+              <i class="fa-solid fa-circle-info"></i>
+              Минимум 1 страница для публикации. Рекомендуемый формат: JPG или PNG, ширина от 800px.
+            </p>
+          </div>
+
+          <!-- ШАГ 3 -->
+          <div class="form-step" data-step="3">
+            <div class="publish-preview">
+              <h3 id="previewTitlePublish">Название истории</h3>
+              <div class="meta" id="previewMetaPublish">Жанр · Автор</div>
+              <div class="description" id="previewDescPublish">Описание комикса...</div>
+            </div>
+
+            <div class="publish-summary">
+              <div class="summary-item">
+                <div class="label">Страниц</div>
+                <div class="value" id="summaryPages">0</div>
+              </div>
+              <div class="summary-item">
+                <div class="label">Жанр</div>
+                <div class="value" id="summaryGenre">—</div>
+              </div>
+              <div class="summary-item">
+                <div class="label">Статус</div>
+                <div class="value">Черновик</div>
+              </div>
+            </div>
+
+            <div class="publish-options">
+              <div class="option-row">
+                <div>
+                  <div class="option-label">Публичный доступ</div>
+                  <div class="option-hint">Разрешить другим пользователям читать комикс</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="option-row">
+                <div>
+                  <div class="option-label">Разрешить комментарии</div>
+                  <div class="option-hint">Читатели смогут оставлять отзывы</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="option-row">
+                <div>
+                  <div class="option-label">Контент 18+</div>
+                  <div class="option-hint">Содержит сцены для взрослой аудитории</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <label class="checkbox-wrapper" style="font-size: 13px; color: var(--text-muted);">
+              <input type="checkbox" id="confirmRules" required>
+              <span>Я подтверждаю, что мой контент не нарушает <a href="rules.html">правила платформы</a></span>
+            </label>
+          </div>
+
+          <!-- Кнопки навигации -->
+          <div class="form-actions" id="formActions">
+            <button type="button" class="btn btn-outline" id="btnPrev" style="visibility: hidden;">
+              <i class="fa-solid fa-arrow-left"></i> Назад
+            </button>
+            <button type="button" class="btn btn-primary" id="btnNext">
+              Далее <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА: ПРЕДПРОСМОТР -->
+        <div class="preview-card">
+          <h4>Пример обложки</h4>
+          <div class="preview-img" id="previewCover">
+            <i class="fa-regular fa-image"></i>
+          </div>
+          <div class="preview-title" id="previewTitle">Название истории</div>
+          <div class="preview-author" id="previewAuthor">Жанр · Автор</div>
+          <div class="preview-desc" id="previewDesc">Краткое описание истории будет отображаться здесь...</div>
+          <div class="info-box" id="previewInfo">
+            <i class="fa-solid fa-circle-info" style="margin-top: 2px;"></i>
+            <div id="previewInfoText">Вы сможете добавить страницы комикса на следующем шаге.</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // --- СОСТОЯНИЕ ВИЗАРДА ---
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    // --- ЭЛЕМЕНТЫ ---
+    const steps = document.querySelectorAll('.step');
+    const formSteps = document.querySelectorAll('.form-step');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const formActions = document.getElementById('formActions');
+
+    // Поля формы
+    const inputTitle = document.getElementById('inputTitle');
+    const inputDesc = document.getElementById('inputDesc');
+    const inputGenre = document.getElementById('inputGenre');
+
+    // Предпросмотр
+    const previewTitle = document.getElementById('previewTitle');
+    const previewAuthor = document.getElementById('previewAuthor');
+    const previewDesc = document.getElementById('previewDesc');
+    const previewInfoText = document.getElementById('previewInfoText');
+
+    // Публикация
+    const previewTitlePublish = document.getElementById('previewTitlePublish');
+    const previewMetaPublish = document.getElementById('previewMetaPublish');
+    const previewDescPublish = document.getElementById('previewDescPublish');
+    const summaryPages = document.getElementById('summaryPages');
+    const summaryGenre = document.getElementById('summaryGenre');
+
+    // Страницы
+    const pagesGrid = document.getElementById('pagesGrid');
+    const addPageBtn = document.getElementById('addPageBtn');
+    const pageInput = document.getElementById('pageInput');
+    let pagesCount = 0;
+
+    // --- ФУНКЦИЯ ПЕРЕКЛЮЧЕНИЯ ШАГА ---
+    function goToStep(step) {
+      if (step < 1 || step > totalSteps) return;
+
+      currentStep = step;
+
+      // Обновляем степпер
+      steps.forEach(s => {
+        const n = parseInt(s.dataset.step);
+        s.classList.toggle('active', n === currentStep);
+        s.classList.toggle('completed', n < currentStep);
+      });
+
+      // Обновляем формы
+      formSteps.forEach(f => {
+        f.classList.toggle('active', parseInt(f.dataset.step) === currentStep);
+      });
+
+      // Кнопки
+      btnPrev.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+
+      if (currentStep === totalSteps) {
+        btnNext.innerHTML = 'Опубликовать <i class="fa-solid fa-check"></i>';
+      } else {
+        btnNext.innerHTML = 'Далее <i class="fa-solid fa-arrow-right"></i>';
+      }
+
+      // Инфо-блок
+      if (currentStep === 1) {
+        previewInfoText.textContent = 'Вы сможете добавить страницы комикса на следующем шаге.';
+      } else if (currentStep === 2) {
+        previewInfoText.textContent = 'Загрузите страницы — их можно удалять и добавлять заново.';
+      } else {
+        previewInfoText.textContent = 'Проверьте всё перед публикацией. После — комикс появится в каталоге.';
+      }
+
+      // Обновляем данные публикации
+      updatePublishPreview();
+
+      // Скролл вверх
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- ВАЛИДАЦИЯ ШАГА 1 ---
+    function validateStep1() {
+      if (!inputTitle.value.trim()) {
+        alert('Пожалуйста, введите название истории');
+        inputTitle.focus();
+        return false;
+      }
+      if (!inputDesc.value.trim()) {
+        alert('Пожалуйста, добавьте описание');
+        inputDesc.focus();
+        return false;
+      }
+      if (!inputGenre.value) {
+        alert('Пожалуйста, выберите жанр');
+        inputGenre.focus();
+        return false;
+      }
+      return true;
+    }
+
+    // --- ВАЛИДАЦИЯ ШАГА 2 ---
+    function validateStep2() {
+      if (pagesCount === 0) {
+        alert('Добавьте хотя бы одну страницу комикса');
+        return false;
+      }
+      return true;
+    }
+
+    // --- ОБНОВЛЕНИЕ ПРЕДПРОСМОТРА ПУБЛИКАЦИИ ---
+    function updatePublishPreview() {
+      const title = inputTitle.value.trim() || 'Название истории';
+      const genre = inputGenre.value || 'Жанр';
+      const desc = inputDesc.value.trim() || 'Описание комикса...';
+
+      previewTitlePublish.textContent = title;
+      previewMetaPublish.textContent = `${genre} · Автор`;
+      previewDescPublish.textContent = desc;
+
+      summaryPages.textContent = pagesCount;
+      summaryGenre.textContent = genre;
+    }
+
+    // --- НАВИГАЦИЯ ---
+    btnNext.addEventListener('click', () => {
+      if (currentStep === 1 && !validateStep1()) return;
+      if (currentStep === 2 && !validateStep2()) return;
+
+      if (currentStep === totalSteps) {
+        publishComic();
+        return;
+      }
+      goToStep(currentStep + 1);
+    });
+
+    btnPrev.addEventListener('click', () => {
+      goToStep(currentStep - 1);
+    });
+
+    // Клик по степперу (можно вернуться только к пройденным шагам)
+    steps.forEach(s => {
+      s.addEventListener('click', () => {
+        const n = parseInt(s.dataset.step);
+        if (n < currentStep) goToStep(n);
+      });
+    });
+
+    // --- ЖИВОЙ ПРЕДПРОСМОТР ---
+    inputTitle.addEventListener('input', () => {
+      previewTitle.textContent = inputTitle.value.trim() || 'Название истории';
+    });
+
+    inputDesc.addEventListener('input', () => {
+      previewDesc.textContent = inputDesc.value.trim() || 'Краткое описание истории будет отображаться здесь...';
+    });
+
+    inputGenre.addEventListener('change', () => {
+      previewAuthor.textContent = `${inputGenre.value || 'Жанр'} · Автор`;
+    });
+
+    // --- ЗАГРУЗКА ОБЛОЖКИ ---
+    const uploadCover = document.getElementById('uploadCover');
+    const previewCover = document.getElementById('previewCover');
+
+    uploadCover.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            previewCover.innerHTML = `<img src="${ev.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);">`;
+            uploadCover.innerHTML = `<i class="fa-solid fa-check" style="color: #22c55e;"></i><div>Обложка загружена</div><div style="font-size: 12px; margin-top: 4px;">Нажмите, чтобы заменить</div>`;
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    });
+
+    // --- ЗАГРУЗКА СТРАНИЦ ---
+    addPageBtn.addEventListener('click', () => {
+      pageInput.click();
+    });
+
+    pageInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          pagesCount++;
+          const pageEl = document.createElement('div');
+          pageEl.className = 'page-item';
+          pageEl.innerHTML = `
+            <img src="${ev.target.result}" alt="Страница ${pagesCount}">
+            <span class="page-number">Стр. ${pagesCount}</span>
+            <button class="page-remove" title="Удалить"><i class="fa-solid fa-xmark"></i></button>
+          `;
+          pagesGrid.insertBefore(pageEl, addPageBtn);
+
+          // Удаление страницы
+          pageEl.querySelector('.page-remove').addEventListener('click', (evt) => {
+            evt.stopPropagation();
+            pageEl.remove();
+            pagesCount--;
+            renumberPages();
+            updatePublishPreview();
+          });
+
+          updatePublishPreview();
+        };
+        reader.readAsDataURL(file);
+      });
+      pageInput.value = '';
+    });
+
+    // Перенумерация страниц после удаления
+    function renumberPages() {
+      const pages = pagesGrid.querySelectorAll('.page-item:not(.add-page)');
+      pages.forEach((p, i) => {
+        p.querySelector('.page-number').textContent = `Стр. ${i + 1}`;
+      });
+      pagesCount = pages.length;
+    }
+
+    // --- ПУБЛИКАЦИЯ ---
+    function publishComic() {
+      const confirm = document.getElementById('confirmRules');
+      if (!confirm.checked) {
+        alert('Пожалуйста, подтвердите согласие с правилами платформы');
+        return;
+      }
+
+      // Собираем данные комикса
+      const pages = Array.from(pagesGrid.querySelectorAll('.page-item:not(.add-page)'))
+        .map(p => p.querySelector('img').src);
+
+      const coverImg = previewCover.querySelector('img');
+      const cover = coverImg ? coverImg.src : '';
+
+      const newComic = {
+        id: 'comic_' + Date.now(),
+        title: inputTitle.value.trim(),
+        author: '@you', // ← потом можно заменить на реального юзера
+        genre: inputGenre.value,
+        description: inputDesc.value.trim(),
+        cover: cover,
+        pages: pages,
+        views: 0,
+        comments: 0,
+        status: 'new', // новые всегда попадают в раздел "Новое"
+        date: new Date().toISOString().split('T')[0],
+        createdAt: Date.now()
+      };
+
+      // Сохраняем в localStorage
+      const saved = JSON.parse(localStorage.getItem('comics') || '[]');
+      saved.push(newComic);
+      localStorage.setItem('comics', JSON.stringify(saved));
+
+      // Показываем экран успеха
+      document.querySelector('.form-layout').style.display = 'none';
+      document.getElementById('stepper').style.display = 'none';
+
+      const main = document.querySelector('main');
+      const successHTML = `
+        <div class="publish-success">
+          <i class="fa-solid fa-circle-check"></i>
+          <h3>История опубликована! 🎉</h3>
+          <p>Ваш комикс «${newComic.title}» теперь доступен читателям.</p>
+          <div style="display: flex; gap: 12px; justify-content: center;">
+            <a href="comics.html" class="btn btn-primary">К моим комиксам</a>
+            <a href="index.html" class="btn btn-outline">На главную</a>
+          </div>
+        </div>
+      `;
+      main.insertAdjacentHTML('beforeend', successHTML);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- ИНИЦИАЛИЗАЦИЯ ---
+    goToStep(1);
+  </script>
+
+</body>
+</html>

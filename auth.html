@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн-комиксы - Вход и регистрация</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-book-open"></i>
+      Онлайн-комиксы
+    </a>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Поиск комиксов, авторов...">
+    </div>
+    <div class="auth-buttons">
+      <a href="auth.html" class="btn-login">Войти</a>
+      <a href="auth.html" class="btn-register">Регистрация</a>
+    </div>
+  </header>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <div class="auth-header">
+        <h2 id="authTitle">С возвращением!</h2>
+        <p id="authSubtitle">Войдите, чтобы продолжить чтение и создание комиксов</p>
+      </div>
+
+      <!-- Вкладки -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Вход</button>
+        <button class="auth-tab" onclick="switchTab('register')">Регистрация</button>
+      </div>
+
+      <!-- Форма входа -->
+      <form class="auth-form active" id="form-login">
+        <div class="input-icon">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" class="form-control" placeholder="Email" required>
+        </div>
+
+        <div class="input-icon">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" class="form-control" placeholder="Пароль" required>
+        </div>
+
+        <a href="#" class="forgot-password">Забыли пароль?</a>
+
+        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+
+        <div class="divider">или</div>
+
+        <div class="social-buttons">
+          <button type="button" class="social-btn"><i class="fa-brands fa-google"></i> Google</button>
+          <button type="button" class="social-btn"><i class="fa-brands fa-vk"></i> VK</button>
+        </div>
+
+        <div class="auth-footer">
+          Нет аккаунта? <a href="#" onclick="switchTab('register'); return false;">Зарегистрируйтесь</a>
+        </div>
+      </form>
+
+      <!-- Форма регистрации -->
+      <form class="auth-form" id="form-register">
+        <div class="input-icon">
+          <i class="fa-regular fa-user"></i>
+          <input type="text" class="form-control" placeholder="Имя пользователя" required>
+        </div>
+
+        <div class="input-icon">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" class="form-control" placeholder="Email" required>
+        </div>
+
+        <div class="input-icon">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" class="form-control" placeholder="Пароль (минимум 8 символов)" required>
+        </div>
+
+        <div class="input-icon">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" class="form-control" placeholder="Повторите пароль" required>
+        </div>
+
+        <label class="checkbox-wrapper">
+          <input type="checkbox" required>
+          <span>
+            Я принимаю <a href="rules.html">правила платформы</a> и 
+            <a href="#">политику конфиденциальности</a>
+          </span>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-block">Создать аккаунт</button>
+
+        <div class="auth-footer">
+          Уже есть аккаунт? <a href="#" onclick="switchTab('login'); return false;">Войдите</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      const tabs = document.querySelectorAll('.auth-tab');
+      const forms = document.querySelectorAll('.auth-form');
+      const title = document.getElementById('authTitle');
+      const subtitle = document.getElementById('authSubtitle');
+
+      tabs.forEach(t => t.classList.remove('active'));
+      forms.forEach(f => f.classList.remove('active'));
+
+      if (tab === 'login') {
+        tabs[0].classList.add('active');
+        document.getElementById('form-login').classList.add('active');
+        title.textContent = 'С возвращением!';
+        subtitle.textContent = 'Войдите, чтобы продолжить чтение и создание комиксов';
+      } else {
+        tabs[1].classList.add('active');
+        document.getElementById('form-register').classList.add('active');
+        title.textContent = 'Создайте аккаунт';
+        subtitle.textContent = 'Присоединяйтесь к сообществу авторов и читателей';
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн-комиксы - Профиль</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-book-open"></i>
+      Онлайн-комиксы
+    </a>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Поиск комиксов, авторов...">
+    </div>
+    <div class="auth-buttons">
+      <a href="auth.html" class="btn-login">Войти</a>
+      <a href="auth.html" class="btn-register">Регистрация</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i> Главная
+      </a>
+      <a href="comics.html" class="nav-item">
+        <i class="fa-solid fa-book"></i> Комиксы
+      </a>
+      <a href="create.html" class="nav-item">
+        <i class="fa-solid fa-pen"></i> Создать историю
+      </a>
+      <a href="rules.html" class="nav-item">
+        <i class="fa-solid fa-file-lines"></i> Правила
+      </a>
+      <a href="profile.html" class="nav-item active">
+        <i class="fa-solid fa-user"></i> Профиль
+      </a>
+    </aside>
+
+    <main>
+      <h2 style="font-size: 28px; margin-bottom: 24px;">Профиль</h2>
+
+      <div class="profile-lock">
+        <div class="profile-icon-wrapper">
+          <i class="fa-solid fa-circle-user main-icon"></i>
+          <i class="fa-solid fa-lock lock-icon"></i>
+        </div>
+        <h2>Войдите или зарегистрируйтесь, чтобы получить доступ к своему профилю</h2>
+        <p>Сохраняйте свои истории, отслеживайте активность, общайтесь с другими авторами и многое другое.</p>
+        <div class="profile-actions">
+          <a href="#" class="btn btn-primary" style="padding: 12px 32px;">Войти</a>
+          <a href="#" class="btn btn-outline" style="padding: 12px 32px;">Зарегистрироваться</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

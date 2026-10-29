@@ -21,10 +21,7 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input type="text" id="searchInput" placeholder="Поиск комиксов, авторов...">
     </div>
-    <div class="auth-buttons">
-      <a href="auth.html" class="btn-login">Войти</a>
-      <a href="auth.html" class="btn-register">Регистрация</a>
-    </div>
+    <div class="auth-buttons" id="authButtons"></div>
   </header>
 
   <div class="layout">
@@ -49,7 +46,6 @@
     <main>
       <h2 style="font-size: 28px; margin-bottom: 24px;">Комиксы</h2>
 
-      <!-- Фильтры -->
       <div class="filters">
         <div class="filter-group" id="filterGroup">
           <button class="filter-btn active" data-filter="all">Все</button>
@@ -64,9 +60,7 @@
         </select>
       </div>
 
-      <!-- Сетка комиксов -->
       <div class="grid-cards" id="comicsGrid">
-
         <div class="card" data-status="popular" data-views="12400" data-date="2024-05-01" data-title="Путь героя" data-author="@user123">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -80,7 +74,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="completed" data-views="8700" data-date="2024-04-15" data-title="Последний рубеж" data-author="@komiksik">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -94,7 +87,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="new" data-views="5300" data-date="2024-06-10" data-title="Новая эра" data-author="@alex_draw">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -108,7 +100,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="popular" data-views="9100" data-date="2024-03-20" data-title="Тени города" data-author="@night_artist">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -122,7 +113,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="new" data-views="6800" data-date="2024-06-05" data-title="Космический странник" data-author="@space_comics">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -136,7 +126,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="completed" data-views="4200" data-date="2024-02-10" data-title="Дневник художника" data-author="@art_life">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -150,7 +139,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="new" data-views="7600" data-date="2024-06-15" data-title="Всё сначала" data-author="@renewal">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -164,7 +152,6 @@
             </div>
           </div>
         </div>
-
         <div class="card" data-status="popular" data-views="3900" data-date="2024-05-20" data-title="Два мира" data-author="@mira">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -178,20 +165,47 @@
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- Сообщение "ничего не найдено" -->
       <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px; color: var(--text-muted);">
         <i class="fa-regular fa-face-frown" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
         <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-main);">Ничего не найдено</h3>
         <p style="font-size: 14px;">Попробуйте изменить фильтры или поисковый запрос</p>
       </div>
-
     </main>
   </div>
 
   <script>
+    // === ШАПКА ===
+    function renderAuthButtons() {
+      const container = document.getElementById('authButtons');
+      if (!container) return;
+      const current = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      if (current) {
+        const initials = current.name.slice(0, 1).toUpperCase();
+        container.innerHTML = `
+          <div class="user-menu">
+            <a href="profile.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main);">
+              <div class="user-avatar">${initials}</div>
+              <span class="user-name">${current.name}</span>
+            </a>
+            <button class="btn-logout" onclick="logoutUser()">Выйти</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <a href="auth.html" class="btn-login">Войти</a>
+          <a href="auth.html" class="btn-register">Регистрация</a>
+        `;
+      }
+    }
+    function logoutUser() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    }
+    renderAuthButtons();
+
+    // === КАТАЛОГ ===
     const grid = document.getElementById('comicsGrid');
     const cards = [];
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -203,7 +217,6 @@
     let currentSort = 'new';
     let currentSearch = '';
 
-    // --- ФИЛЬТРАЦИЯ ПО ВКЛАДКАМ ---
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
@@ -213,22 +226,18 @@
       });
     });
 
-    // --- СОРТИРОВКА ---
     sortSelect.addEventListener('change', (e) => {
       currentSort = e.target.value;
       applyFilters();
     });
 
-    // --- ПОИСК ---
     searchInput.addEventListener('input', (e) => {
       currentSearch = e.target.value.toLowerCase().trim();
       applyFilters();
     });
 
-    // --- ЗАГРУЗКА ПОЛЬЗОВАТЕЛЬСКИХ КОМИКСОВ ИЗ LOCALSTORAGE ---
     function renderUserComics() {
       const saved = JSON.parse(localStorage.getItem('comics') || '[]');
-      
       saved.forEach(comic => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -237,13 +246,11 @@
         card.dataset.date = comic.date;
         card.dataset.title = comic.title;
         card.dataset.author = comic.author;
-        card.dataset.genre = comic.genre;
-        card.dataset.id = comic.id;
-        
-        const coverHTML = comic.cover 
+
+        const coverHTML = comic.cover
           ? `<img src="${comic.cover}" style="width: 100%; height: 100%; object-fit: cover;">`
           : `<i class="fa-regular fa-image"></i>`;
-        
+
         card.innerHTML = `
           <div class="card-img">${coverHTML}</div>
           <div class="card-body">
@@ -257,33 +264,24 @@
             </div>
           </div>
         `;
-        
         grid.appendChild(card);
       });
-      
-      // Обновляем массив cards, чтобы фильтры видели новые
+
       cards.length = 0;
       cards.push(...grid.querySelectorAll('.card'));
     }
 
-    // Вызываем перед первой фильтрацией
-    renderUserComics();
-    applyFilters();
-
-    // --- ОСНОВНАЯ ФУНКЦИЯ ---
     function applyFilters() {
-      // 1. Фильтр по статусу + поиск
       let visibleCards = cards.filter(card => {
         const matchesFilter = currentFilter === 'all' || card.dataset.status === currentFilter;
         const title = card.dataset.title.toLowerCase();
         const author = card.dataset.author.toLowerCase();
-        const matchesSearch = currentSearch === '' || 
-                              title.includes(currentSearch) || 
+        const matchesSearch = currentSearch === '' ||
+                              title.includes(currentSearch) ||
                               author.includes(currentSearch);
         return matchesFilter && matchesSearch;
       });
 
-      // 2. Сортировка
       visibleCards.sort((a, b) => {
         if (currentSort === 'new') {
           return new Date(b.dataset.date) - new Date(a.dataset.date);
@@ -294,18 +292,17 @@
         }
       });
 
-      // 3. Скрываем все, затем показываем нужные в правильном порядке
       cards.forEach(card => card.style.display = 'none');
       visibleCards.forEach(card => {
         card.style.display = 'flex';
-        grid.appendChild(card); // переставляем в конец — так сортировка сработает
+        grid.appendChild(card);
       });
 
-      // 4. Пустое состояние
       emptyState.style.display = visibleCards.length === 0 ? 'block' : 'none';
     }
 
-    // Инициализация при загрузке
+    // Один вызов после всех объявлений
+    renderUserComics();
     applyFilters();
   </script>
 

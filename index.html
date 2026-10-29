@@ -12,7 +12,6 @@
 </head>
 <body>
 
-  <!-- Шапка -->
   <header>
     <a href="index.html" class="logo">
       <i class="fa-solid fa-book-open"></i>
@@ -22,15 +21,10 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input type="text" placeholder="Поиск комиксов, авторов...">
     </div>
-    <div class="auth-buttons">
-      <a href="auth.html" class="btn-login">Войти</a>
-      <a href="auth.html" class="btn-register">Регистрация</a>
-    </div>
+    <div class="auth-buttons" id="authButtons"></div>
   </header>
 
-  <!-- Макет -->
   <div class="layout">
-    <!-- Сайдбар -->
     <aside class="sidebar">
       <a href="index.html" class="nav-item active">
         <i class="fa-solid fa-house"></i> Главная
@@ -49,16 +43,13 @@
       </a>
     </aside>
 
-    <!-- Контент -->
     <main>
-      <!-- Популярные комиксы -->
       <div class="section-header">
         <h2>Популярные комиксы</h2>
         <a href="comics.html" class="link-all">Смотреть все <i class="fa-solid fa-arrow-right"></i></a>
       </div>
-      
+
       <div class="grid-cards">
-        <!-- Карточка 1 -->
         <div class="card">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -66,7 +57,6 @@
             <div class="author">Автор: @user123</div>
           </div>
         </div>
-        <!-- Карточка 2 -->
         <div class="card">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -74,7 +64,6 @@
             <div class="author">Автор: @komiksik</div>
           </div>
         </div>
-        <!-- Карточка 3 -->
         <div class="card">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -82,7 +71,6 @@
             <div class="author">Автор: @alex_draw</div>
           </div>
         </div>
-        <!-- Карточка 4 -->
         <div class="card">
           <div class="card-img"><i class="fa-regular fa-image"></i></div>
           <div class="card-body">
@@ -92,7 +80,6 @@
         </div>
       </div>
 
-      <!-- Недавние обновления -->
       <div class="section-header">
         <h2>Недавние обновления</h2>
       </div>
@@ -135,40 +122,62 @@
   </div>
 
   <script>
-  // --- ДОБАВЛЯЕМ НОВЫЕ КОМИКСЫ В "НЕДАВНИЕ ОБНОВЛЕНИЯ" ---
-  const saved = JSON.parse(localStorage.getItem('comics') || '[]');
-  const updateList = document.querySelector('.update-list');
+    // === ШАПКА ===
+    function renderAuthButtons() {
+      const container = document.getElementById('authButtons');
+      if (!container) return;
+      const current = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      if (current) {
+        const initials = current.name.slice(0, 1).toUpperCase();
+        container.innerHTML = `
+          <div class="user-menu">
+            <a href="profile.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main);">
+              <div class="user-avatar">${initials}</div>
+              <span class="user-name">${current.name}</span>
+            </a>
+            <button class="btn-logout" onclick="logoutUser()">Выйти</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <a href="auth.html" class="btn-login">Войти</a>
+          <a href="auth.html" class="btn-register">Регистрация</a>
+        `;
+      }
+    }
+    function logoutUser() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    }
+    renderAuthButtons();
 
-  // Сортируем: самые свежие — наверху
-  const recent = [...saved].sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
+    // === НЕДАВНИЕ ОБНОВЛЕНИЯ ===
+    const saved = JSON.parse(localStorage.getItem('comics') || '[]');
+    const updateList = document.querySelector('.update-list');
+    const recent = [...saved].sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
 
-  recent.forEach(comic => {
-    const item = document.createElement('div');
-    item.className = 'update-item';
-    
-    const thumbHTML = comic.cover
-      ? `<img src="${comic.cover}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);">`
-      : `<i class="fa-regular fa-image"></i>`;
+    recent.forEach(comic => {
+      const item = document.createElement('div');
+      item.className = 'update-item';
+      const thumbHTML = comic.cover
+        ? `<img src="${comic.cover}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);">`
+        : `<i class="fa-regular fa-image"></i>`;
+      const daysAgo = Math.floor((Date.now() - comic.createdAt) / (1000 * 60 * 60 * 24));
+      let dateLabel = 'Сегодня';
+      if (daysAgo === 1) dateLabel = 'Вчера';
+      else if (daysAgo > 1 && daysAgo < 5) dateLabel = `${daysAgo} дня назад`;
+      else if (daysAgo >= 5) dateLabel = `${daysAgo} дней назад`;
 
-    // Форматируем дату: "Сегодня", "Вчера", "N дней назад"
-    const daysAgo = Math.floor((Date.now() - comic.createdAt) / (1000 * 60 * 60 * 24));
-    let dateLabel = 'Сегодня';
-    if (daysAgo === 1) dateLabel = 'Вчера';
-    else if (daysAgo > 1 && daysAgo < 5) dateLabel = `${daysAgo} дня назад`;
-    else if (daysAgo >= 5) dateLabel = `${daysAgo} дней назад`;
-
-    item.innerHTML = `
-      <div class="update-thumb">${thumbHTML}</div>
-      <div class="update-info">
-        <h4>${comic.title}</h4>
-        <p>Автор: ${comic.author}</p>
-      </div>
-      <div class="update-date">${dateLabel}</div>
-    `;
-    
-    // Вставляем сверху
-    updateList.insertBefore(item, updateList.firstChild);
-  });
+      item.innerHTML = `
+        <div class="update-thumb">${thumbHTML}</div>
+        <div class="update-info">
+          <h4>${comic.title}</h4>
+          <p>Автор: ${comic.author}</p>
+        </div>
+        <div class="update-date">${dateLabel}</div>
+      `;
+      updateList.insertBefore(item, updateList.firstChild);
+    });
   </script>
 
 </body>
